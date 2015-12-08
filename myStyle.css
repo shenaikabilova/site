@@ -1,0 +1,71 @@
+.nav li {
+	display: inline;
+	font-size: 16px;
+}
+
+.nav {
+	background-color: #303030;
+	height: 60px;
+}
+
+.jumbotron {
+	background-image: url("background.jpg");
+	height: 600px;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.contrainer h1 {
+	font-family: Vivaldi;
+	margin-left: 100px;
+	margin-top: 40px;
+	font-size: 100px;
+}
+
+.contrainer h2 {
+	margin-left: 200px;
+}
+
+.login {
+	margin-left: 1000px;
+	margin-top: -200px;
+	text-align: justify;
+	padding-right: 10px;
+}
+
+.registration {
+	margin-left: 900px;
+	margin-top: -200px;
+	text-align: justify;
+	padding-right: 10px;
+}
+
+.login label {
+	font-size: 16px;
+}
+
+.registration label {
+	font-size: 16px;
+}
+
+.login button {
+	font-size: 16px;
+	border-radius: 5px;
+	margin-top: 15px;
+	width: 150px;
+}
+
+.registration button {
+	font-size: 16px;
+	border-radius: 5px;
+	margin-top: 15px;
+	width: 150px;
+}
+
+.login h2 {
+	margin-left: 30px;
+}
+
+.registration h2{
+	margin-left: 80px;
+}
