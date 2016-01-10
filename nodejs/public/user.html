@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+        <meta http-equiv="Content-Language" content="BG" />
+        <link href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet"/>
+        <link href = "stylesheets/users.css" type = "text/css" rel = "stylesheet"/>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script>
+            $(function() {
+                var name = localStorage.getItem('username');
+
+                if (name != "undefined" || name != "null") {
+                   // document.getElementById('welcomeMessage').innerHTML = "Welcome " + name + "!";
+                    $('.nav h3').html('Welcome ' + name);
+                } else
+                    document.getElementById('welcomeMessage').innerHTML = "Welcome!";
+
+                // $('.nav h3').html('Welcome ' + name);
+            });
+        </script>
+    </head>
+    <body>
+        <div class="nav">
+            <h3 id="welcomeMessage">Моята библиотека</h3>
+        </div>
+
+        <div  class="navigation">
+            <div class="menu">
+                <ul>
+                    <li><a class="selected" href="user.html">Начало</a></li>
+                    <li><a href="#">Моята библиотека</a></li>
+                    <li><a href="userSettings.html">Настройки</a></li>
+                    <li><a href="index.html">Изход</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

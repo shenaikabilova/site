@@ -4,15 +4,30 @@
 	<meta charset="utf-8">
 		<title>BookStore-Registration</title>
 		<link href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet"/>
-		<link href = "myStyle.css" type="text/css" rel = "stylesheet"/>
+		<link href = "stylesheets/myStyle.css" type="text/css" rel = "stylesheet"/>
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<link rel="stylesheet" href="/resources/demos/style.css">
+		<script>
+			$(function() {
+				$( "#datepicker" ).datepicker({
+					dateFormat: "yy-mm-dd",
+					onSelect: function(datetext){
+						$(this).val(datetext); }
+				});
+			});
+		</script>
+	</head>
 	</head>
 	
 	<body>
 		<div class = "nav">
 			<div class = "container">
 				<ul class = "nav nav-pills">
-					<li class="active pull-right"><a href="#">Registration</a></li>
-					<li class="pull-right"><a href="index.html">Log in</a></li>
+					<li class="active pull-right"><a href="#">Регистрация</a></li>
+					<li class="pull-right"><a href="index.html">Вход</a></li>
 				</ul>
 			</div>
 		</div>
@@ -24,35 +39,36 @@
 			</div>
 			
 			<div class="registration">
-				<form>
+				<form action="user" method="post">
 					<table>
-						<h2>Registration</h2>
+						<h2>Регистрация</h2>
 						<tr>
-							<td><label for="username">Username: </label></td>
-							<td><input type = "text" name = "username"></td>
+							<td><label for="username">Потребителско име: </label></td>
+							<td><input type = "text" placeholder="Име" id ="username" name = "userName"></td>
 						</tr>
 						<tr>
-							<td><label for="password">Password: </label></td>
-							<td><input type = "text" name = "password"></td>
+							<td><label for="password1">Парола: </label></td>
+							<td><input type = "password" placeholder="Парола" id="password1" name = "pass1"></td>
 						</tr>
 						<tr>
-							<td><label for="password">Enter password again:</label></td>
-							<td><input type = "text" name = "password"></td>
-						</td>
-						<tr>
-							<td><label for="email">E-mail</label></td>
-							<td><input type="text" name="email"></td>
+							<td><label for="password2">Въведете паролата отново:</label></td>
+							<td><input type = "password" placeholder="Парола" id="password2" name = "pass2"></td>
 						</tr>
 						<tr>
-							<td><label for="sex">Sex:</label></td>
-							<td><input type="radio" name="sex" value="male" checked> male</td>
-							<td><input type="radio" name="sex" value="female"> female</td>
+							<td><label for="email">Е-майл:</label></td>
+							<td><input type="text" placeholder="Е-майл" id="email" name="email"></td>
 						</tr>
 						<tr>
-							<td><label for="birtday">Birthday:</label></td>
+							<td><label for="gender">Пол:</label></td>
+							<td><input type="radio" id="gender" name="gender" value="m" checked>мъж</td>
+							<td><input type="radio" name="gender" value="f">жена</td>
 						</tr>
 						<tr>
-							<td><button type="button">Registration</button></td>
+							<td><label for="birthday">Рожден ден:</label></td>
+							<td><input type="text" placeholder="Рожден ден" id="datepicker" name="bDay"></td>
+						</tr>
+						<tr>
+							<td><input type="submit" value="Регистрация"></td>
 						</tr>
 					</table>
 				</form>

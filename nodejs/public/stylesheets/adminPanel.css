@@ -1,0 +1,72 @@
+body {
+    background:url("../images/background.jpg") no-repeat;
+}
+
+.nav {
+    background-color: #030303;
+    height: 60px;
+}
+
+.nav h3 {
+    color: white;
+    margin-left: 50px;
+    margin-top: 15px;
+}
+
+.navigation {
+    margin-top: 10px;
+    background-color: #303030 ;
+    width: 250px;
+    height: 100%;
+    position: absolute;
+    top: 50px;
+    padding: 0;
+    list-style: none;
+}
+
+.navigation li {
+    list-style: none;
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.navigation li a {
+    margin-left: -40px;
+    display: block;
+    padding: 5px;
+    color: #ccc;
+    font-size: 15px;
+    border-bottom: 1px solid #0A0A0A;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
+    transition: 0.2s;
+}
+
+.navigation li a:hover {
+    background-color: #030303;
+    color: #fff;
+    padding-left: 30px;
+}
+
+.navigation li a.selected {
+    background-color: #030303;
+    color: #fff;
+}
+
+.add, .books, .users {
+    margin-left: 280px;
+    width: auto;
+    height: 100%;
+}
+
+.users table, .users th, .users tr, .users td {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.settings {
+    margin-left: 280px;
+    width: auto;
+    height: 100%;
+}

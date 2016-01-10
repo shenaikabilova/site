@@ -9,9 +9,8 @@
 }
 
 .jumbotron {
-	background-image: url("background.jpg");
 	height: 600px;
-	background-repeat: no-repeat;
+	background:url("../images/background.jpg") no-repeat;
 	background-size: cover;
 }
 

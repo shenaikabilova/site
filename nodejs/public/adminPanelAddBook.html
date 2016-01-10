@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Администратор</title>
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+        <meta http-equiv="Content-Language" content="BG" />
+        <link href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet"/>
+        <link href = "stylesheets/adminPanel.css" type = "text/css" rel = "stylesheet"/>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <link rel="stylesheet" href="/resources/demos/style.css"> -->
+        <script>
+            $(function() {
+                var name = localStorage.getItem('username');
+
+                if (name != "undefined" || name != "null") {
+                    document.getElementById('welcomeMessage').innerHTML = "Welcome " + name + "!";
+                } else
+                    document.getElementById('welcomeMessage').innerHTML = "Welcome!";
+
+               // $('.nav h3').html('Welcome ' + name);
+            });
+        </script>
+    </head>
+
+    <body>
+        <div class="nav">
+            <h3 id="welcomeMessage"></h3>
+        </div>
+
+        <div class="navigation">
+            <div class="menu">
+                <ul>
+                    <li><a class="selected" href="adminPanelAddBook.html">Добави нова книга</a></li>
+                    <li><a href="adminPanelBooks.html">Книги</a></li>
+                    <li><a href="adminPanelUsers.html">Потребители</a></li>
+                    <li><a href="adminPanelSettings.html">Настройки</a></li>
+                    <li><a href="index.html">Изход</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="add">
+            <h3>Добави нова книга</h3>
+            <form action="adminPanelAddBook" method="post" enctype="multipart/form-data">
+                <table>
+                    <tr>
+                        <td><label for="bookID">№ книга: </label></td>
+                        <td><input type="text" placeholder="№ на книга" id="bookID" name="bookID" size="30"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bookName">Заглавие: </label></td>
+                        <td><input type="text" placeholder="Заглавие" id="bookName" name="bookName" size="30"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bookAuthor">Автор: </label></td>
+                        <td><input type="text" placeholder="Автор" id="bookAuthor" name="bookAuthor" size="30"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bookYear">Година: </label></td>
+                        <td><input type="text" placeholder="Година" id="bookYear" name="bookYear" size="10"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bookGenre">Жанр</label></td>
+                        <td><input type="text" placeholder="Жанр" id="bookGenre" name="bookGenre" size="30"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bookPublisher">Издателство: </label></td>
+                        <td><input type="text" placeholder="Издателсвто"id="bookPublisher" name="bookPublisher" size="30"></td>
+                    <tr>
+                        <td><label for="bookCover">Корица: </label></td>
+                        <td><input type="file" accept="image/jpeg" id="bookcover" size="40" name="bookCover"></tr>
+                    </tr>
+                    <tr>
+                        <td><label for="bookInformation">Описание: </label></td>
+                        <td><textarea rows="5" cols="30" placeholder="Добави описание на книга ..." id="bookInformation" name="bookDescription"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Добави"></tr>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>

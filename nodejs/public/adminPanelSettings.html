@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Настройки</title>
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+        <meta http-equiv="Content-Language" content="BG" />
+        <link href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet"/>
+        <link href = "stylesheets/adminPanel.css" type = "text/css" rel = "stylesheet"/>
+
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script>
+            $(function() {
+                $( "#datepicker" ).datepicker({
+                    dateFormat: "yy-mm-dd",
+                    onSelect: function(datetext){
+                        $(this).val(datetext); }
+                });
+            });
+
+            $(function() {
+                $('.nav h3').html('Welcome ' + localStorage.getItem('username'));
+
+                $('#adminName').val(localStorage.getItem('username'));
+            });
+        </script>
+    </head>
+
+    <body>
+    <div class="nav">
+        <h3>Администратор</h3>
+    </div>
+
+    <div class="navigation">
+        <div class="menu">
+            <ul>
+                <li><a href="adminPanelAddBook.html">Добави нова книга</a></li>
+                <li><a href="adminPanelBooks.html">Книги</a></li>
+                <li><a href="adminPanelUsers.html">Потребители</a></li>
+                <li><a class="selected" href="adminPanelSettings.html">Настройки</a></li>
+                <li><a class="adminPanelDelete.html">Изтрий</a></li>
+                <li><a href="index.html">Изход</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="settings">
+        <h4>Настройки на администратор</h4>
+
+        <form action="adminSettings" method="post">
+            <table>
+                <tr>
+                    <td><lable for="adminName">Име: </lable></td>
+                    <td><input type="text" placeholder="Име" id="adminName" name="adminName"></td>
+                </tr>
+                <tr>
+                    <td><label for="adminPass">Парола: </label></td>
+                    <td><input type="text" placeholder="Парола" id="adminPass" name="adminPass"></td>
+                </tr>
+                <tr>
+                    <td><label for="adminEmail">Е-майл: </label></td>
+                    <td><input type="text" placeholder="Е-майл" id="adminEmail" name="adminEmail"></td>
+                </tr>
+                <tr>
+                    <td><label for="adminGender">Пол: </label></td>
+                    <td><input type="text" placeholder="Пол" id="adminGender" name="adminGender"></td>
+                </tr>
+                <tr>
+                    <td><label for="datepicker">Рожден ден:</label></td>
+                    <td><input type="text" placeholder="Рожден ден" id="datepicker" name="bDay"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    </body>
+</html>
