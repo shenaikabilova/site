@@ -1,11 +1,9 @@
 var express = require('express');
 var mysql = require('mysql');
+var passport = require('passport');
 var router = express.Router();
 
-var LocalStorage = require('node-localstorage').LocalStorage,
-    localStorage = new LocalStorage('./scratch');
-
-function mysqlDB() {
+/*function mysqlDB() {
   var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -15,17 +13,57 @@ function mysqlDB() {
   connection.connect();
 
   return connection;
-}
+}*/
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+/*router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
-});
+});*/
 
+module.exports = function(app, passport) {
+    router.get('/', function(req, res, next) {
+        res.render('index', { title: 'Express' });
+    })
+
+    app.get('/', function(req, res) {
+       // res.render('index', { title: 'Express' });
+        res.redirect('/index.html');
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/login', passport.authenticate('local', {
+                            /*successRedirect: '/user.html',*/
+                            failureRedirect: '/index.html'
+
+    }, function(req, res) {
+            if(user==='admin') {
+                res.redirect('/adminPanelAddBook.html');
+            }
+            else res.redirect('/user.html');
+    }));
+
+    //noinspection JSUnresolvedFunction
+    app.post('/user', function(req, res) {
+        var conn = mysqlDB();
+        if(req.body.pass1 === req.body.pass2) {
+            conn.query('INSERT INTO users(user_name,pass,email,gender,b_day) VALUES("' +
+                req.body.userName + '", "' +
+                req.body.pass1 + '", "' +
+                req.body.email + '", "' +
+                req.body.gender + '", "' +
+                req.body.bDay + '")', function (err) {
+                if (err) throw err;
+                else {
+                    res.redirect('/user.html')
+                }
+            })
+        }
+    });
+};
 //
 //
 //noinspection JSUnresolvedFunction
-router.post('/login', function(req, res) {
+/*router.post('/login', function(req, res) {
   var userName = req.body.username;
   var pass = req.body.password;
     var conn = mysqlDB();
@@ -44,7 +82,6 @@ router.post('/login', function(req, res) {
         role = rows[0].role;
 
         if(pass1 === pass) {
-            localStorage.setItem('username', userName);
             if(role === 'admin') {
                 res.redirect('/adminPanelAddBook.html');
             }
@@ -52,24 +89,9 @@ router.post('/login', function(req, res) {
         }
 
     });
-});
+});*/
 
 //noinspection JSUnresolvedFunction
-router.post('/user', function(req, res) {
-  var conn = mysqlDB();
-    if(req.body.pass1 === req.body.pass2) {
-        conn.query('INSERT INTO users(user_name,pass,email,gender,b_day) VALUES("' +
-            req.body.userName + '", "' +
-            req.body.pass1 + '", "' +
-            req.body.email + '", "' +
-            req.body.gender + '", "' +
-            req.body.bDay + '")', function (err) {
-            if (err) throw err;
-            else {
-                res.redirect('/user.html')
-            }
-        })
-    }
-});
 
-module.exports = router;
+
+//module.exports = router;

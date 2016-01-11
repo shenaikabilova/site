@@ -6,28 +6,11 @@
         <meta http-equiv="Content-Language" content="BG" />
         <link href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet"/>
         <link href = "stylesheets/adminPanel.css" type = "text/css" rel = "stylesheet"/>
-
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        <link rel="stylesheet" href="/resources/demos/style.css"> -->
-        <script>
-            $(function() {
-                var name = localStorage.getItem('username');
-
-                if (name != "undefined" || name != "null") {
-                    document.getElementById('welcomeMessage').innerHTML = "Welcome " + name + "!";
-                } else
-                    document.getElementById('welcomeMessage').innerHTML = "Welcome!";
-
-               // $('.nav h3').html('Welcome ' + name);
-            });
-        </script>
     </head>
 
     <body>
         <div class="nav">
-            <h3 id="welcomeMessage"></h3>
+            <h3>Администратор</h3>
         </div>
 
         <div class="navigation">
