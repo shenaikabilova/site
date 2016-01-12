@@ -32,16 +32,16 @@ module.exports = function(app, passport) {
 
     //noinspection JSUnresolvedFunction
     app.post('/login', passport.authenticate('local-login', {
-                            /*successRedirect: '/user.html',*/
                             failureRedirect: '/index.html',
                             failureFlash : true
 
-    }, function(req, res) {
-            if(user==='admin') {
+    }), function(req, res) {
+        console.log(req.user);
+            if(req.user.role==='admin') {
                 res.redirect('/adminPanelAddBook.html');
             }
             else res.redirect('/user.html');
-    }));
+    });
 
     //noinspection JSUnresolvedFunction
     app.post('/user', passport.authenticate('local-registration', {

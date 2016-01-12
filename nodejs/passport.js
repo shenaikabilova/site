@@ -20,12 +20,14 @@ module.exports = function (passport) {
     var conn = mysqlDB();
 
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        done(null, user.user_name);
     });
 
-    passport.deserializeUser(function (id, done) {
-        conn.query("select * from users where id = "+id,function(err,rows){
+    passport.deserializeUser(function (user_name, done) {
+        console.log('restoring user session for ', user_name);
+        conn.query("select * from users where user_name=?", [user_name] ,function(err,rows){
             done(err, rows[0]);
+            console.log(rows[0]);
         });
     });
 
@@ -62,13 +64,12 @@ module.exports = function (passport) {
             conn.query('SELECT * FROM users WHERE user_name = "' + username + '"', function (err, rows) {
                 if (err) done(err);
                 if (!rows.length) {
-                    return done(null, false, req.flash('loginMessage', 'No user found!'));
+                    return done(null, false);
                 }
                 if (!(rows[0].pass == password)) {
-                    return done(null, false, req.flash('loginMessage', 'Wrong password!'));
+                    return done(null, false);
                 }
-
-                console.log(req.body);
+                console.log('returning as logged in user:', rows[0]);
                 return done(null, rows[0]);
             })
         }

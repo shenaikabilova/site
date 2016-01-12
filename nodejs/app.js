@@ -10,13 +10,13 @@ var passport = require('passport');
 var passportLocal = require('passport-local');
 var flash = require('connect-flash');
 
-var routes = require('./routes/index');
+//var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
 
 var app = express();
 
-require('./passport')(passport);
+var user = require('./passport')(passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,8 +39,8 @@ app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/adminPanel', routes);
+//app.use('/', routes);
+//app.use('/adminPanel', routes);
 app.use('/users', users);
 app.use('/adminPanelAddBook', admin);
 
