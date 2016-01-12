@@ -3,17 +3,17 @@ var mysql = require('mysql');
 var passport = require('passport');
 var router = express.Router();
 
-/*function mysqlDB() {
+function mysqlDB() {
   var connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '123456',
-    database: 'site'
+    database: 'users'
   });
   connection.connect();
 
   return connection;
-}*/
+}
 
 /* GET home page. */
 /*router.get('/', function(req, res, next) {
@@ -31,9 +31,10 @@ module.exports = function(app, passport) {
     });
 
     //noinspection JSUnresolvedFunction
-    app.post('/login', passport.authenticate('local', {
+    app.post('/login', passport.authenticate('local-login', {
                             /*successRedirect: '/user.html',*/
-                            failureRedirect: '/index.html'
+                            failureRedirect: '/index.html',
+                            failureFlash : true
 
     }, function(req, res) {
             if(user==='admin') {
@@ -43,22 +44,11 @@ module.exports = function(app, passport) {
     }));
 
     //noinspection JSUnresolvedFunction
-    app.post('/user', function(req, res) {
-        var conn = mysqlDB();
-        if(req.body.pass1 === req.body.pass2) {
-            conn.query('INSERT INTO users(user_name,pass,email,gender,b_day) VALUES("' +
-                req.body.userName + '", "' +
-                req.body.pass1 + '", "' +
-                req.body.email + '", "' +
-                req.body.gender + '", "' +
-                req.body.bDay + '")', function (err) {
-                if (err) throw err;
-                else {
-                    res.redirect('/user.html')
-                }
-            })
-        }
-    });
+    app.post('/user', passport.authenticate('local-registration', {
+                       successRedirect: './public/user.html',
+                       failureRedirect: '/registration.html',
+                       failureFlash : true}
+    ));
 };
 //
 //
@@ -93,5 +83,21 @@ module.exports = function(app, passport) {
 
 //noinspection JSUnresolvedFunction
 
+/*router.post('/user', function(req, res) {
+    var conn = mysqlDB();
+    if(req.body.pass1 === req.body.pass2) {
+        conn.query('INSERT INTO users(user_name,pass,email,gender,b_day, role) VALUES("' +
+            req.body.userName + '", "' +
+            req.body.pass + '", "' +
+            req.body.email + '", "' +
+            req.body.gender + '", "' +
+            req.body.bDay + '", "user")', function (err) {
+            if (err) throw err;
+            else {
+                res.redirect('/user.html')
+            }
+        })
+    }
+});*/
 
 //module.exports = router;
