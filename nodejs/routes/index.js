@@ -67,17 +67,8 @@ module.exports = function(app, passport) {
     //noinspection JSUnresolvedFunction
     app.post('/adminPanelAddBook', function(req, res) {
         var conn = mysqlDB();
-        console.log("role: "+ req.user.role);
-        console.log("username: ", req.user.user_name);
-        console.log("id " + req.body.bookID);
-        console.log("name " + req.body.bookName);
-        console.log("author " + req.body.bookAuthor);
-        console.log("year " + req.body.bookYear);
-        console.log("genre " + req.body.bookGenre);
-        console.log("publisher " + req.body.bookPublisher);
-        console.log("cover " + req.body.bookCover);
-        console.log("description " + req.body.bookDescription);
-       /* conn.query('INSERT INTO books(book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description) VALUES (' +
+
+        conn.query('INSERT INTO books(book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description) VALUES (' +
             req.body.bookID + ', "' +
             req.body.bookName + '", "' +
             req.body.bookAuthor + '", ' +
@@ -88,13 +79,25 @@ module.exports = function(app, passport) {
             req.body.bookDescription + '")', function (err) {
             if (err) throw err;
             else {
-                res.redirect('/adminPanelBooks.html');
+                res.redirect('/adminPanelAddBook.html');
             }
-        })*/
+        })
+    });
+
+    app.post('/adminPanelBooks', function(req, res) {
+        var conn = mysqlDB();
+        conn.query('SELECT book_id, book_name, book_author, book_year, book_genre, ' +
+            'book_publisher, book_cover, book_description FROM books)', function(err, rows) {
+                if(err) throw err;
+
+                for (var i = 0; i < rows.length; i++) {
+                    console.log(rows[i].book_id);
+                };
+        });
     });
 
     app.get('/logout', function(req, res) {
-        console.log("end session");
+        console.log("end session " + req.user.user_name);
         req.logout();
         res.redirect('index.html');
     })
