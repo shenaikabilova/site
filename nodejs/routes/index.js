@@ -36,11 +36,14 @@ module.exports = function(app, passport) {
                             failureFlash : true
 
     }), function(req, res) {
-      //  console.log(req.user);
+        console.log(req.user);
             if(req.user.role==='admin') {
                 res.redirect('/adminPanelAddBook.html');
             }
-            else res.redirect('/user.html');
+            //else res.redirect('/user.html');
+            if(req.user.role === 'user') {
+                res.redirect('/user.html');
+            }
     });
 
     //noinspection JSUnresolvedFunction
@@ -89,6 +92,12 @@ module.exports = function(app, passport) {
             }
         })*/
     });
+
+    app.get('/logout', function(req, res) {
+        console.log("end session");
+        req.logout();
+        res.redirect('index.html');
+    })
 };
 //
 //
