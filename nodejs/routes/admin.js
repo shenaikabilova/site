@@ -18,9 +18,10 @@ function mysqlDB() {
 }
 
 //noinspection JSUnresolvedFunction
-router.post('/adminPanelAddBook', function(req, res) {
+/*router.post('/adminPanelAddBook', function(req, res) {
+    console.log("example");
     var conn = mysqlDB();
-    conn.query('INSERT INTO books(book_id,book_name,book_author,book_year,book_publisher,book_cover,book_description) VALUES (' +
+    conn.query('INSERT INTO books(book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description) VALUES (' +
         req.body.bookID + ', "' +
         req.body.bookName + '", "' +
         req.body.bookAuthor + '", ' +
@@ -30,9 +31,10 @@ router.post('/adminPanelAddBook', function(req, res) {
         req.body.bookCover + '", "' +
         req.body.bookDescription + '")', function (err) {
             if (err) throw err;
-            if(res.statusCode == 302)
-                res.redirect('public/adminPanelAddBook.html');
+            else {
+                res.redirect('/adminPanelBooks.html');
+            }
         })
-});
+});*/
 
 module.exports = router;

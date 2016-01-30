@@ -24,14 +24,14 @@ module.exports = function (passport) {
     });
 
     passport.deserializeUser(function (user_name, done) {
-        console.log('restoring user session for ', user_name);
+      //  console.log('restoring user session for ', user_name);
         conn.query("select * from users where user_name=?", [user_name] ,function(err,rows){
             done(err, rows[0]);
-            console.log(rows[0]);
+           // console.log(rows[0]);
         });
     });
 
-    passport.use('local-registration', new LocalStrategy(function(req, username, password, done) {
+    /*passport.use('local-registration', new LocalStrategy(function(req, username, password, done) {
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
         conn.query("SELECT * FROM users WHERE username = ?",[username], function(err, rows) {
@@ -57,7 +57,7 @@ module.exports = function (passport) {
                 });
             }
         });
-    }));
+    }));*/
 
     passport.use('local-login', new LocalStrategy(function (username, password, done) {
 
@@ -69,7 +69,7 @@ module.exports = function (passport) {
                 if (!(rows[0].pass == password)) {
                     return done(null, false);
                 }
-                console.log('returning as logged in user:', rows[0]);
+               // console.log('returning as logged in user:', rows[0]);
                 return done(null, rows[0]);
             })
         }

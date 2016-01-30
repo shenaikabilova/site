@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/', routes);
 //app.use('/adminPanel', routes);
 app.use('/users', users);
-app.use('/adminPanelAddBook', admin);
+//app.use('/adminPanelAddBook', admin);
 
 require('./routes/index.js')(app, passport);
 

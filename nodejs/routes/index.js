@@ -36,7 +36,7 @@ module.exports = function(app, passport) {
                             failureFlash : true
 
     }), function(req, res) {
-        console.log(req.user);
+      //  console.log(req.user);
             if(req.user.role==='admin') {
                 res.redirect('/adminPanelAddBook.html');
             }
@@ -44,11 +44,51 @@ module.exports = function(app, passport) {
     });
 
     //noinspection JSUnresolvedFunction
-    app.post('/user', passport.authenticate('local-registration', {
-                       successRedirect: './public/user.html',
-                       failureRedirect: '/registration.html',
-                       failureFlash : true}
-    ));
+    app.post('/user', function(req, res) {
+        var conn = mysqlDB();
+        if(req.body.pass1 === req.body.pass2) {
+            conn.query('INSERT INTO users(user_name,pass,email,gender,b_day, role) VALUES("' +
+                req.body.userName + '", "' +
+                req.body.pass1 + '", "' +
+                req.body.email + '", "' +
+                req.body.gender + '", "' +
+                req.body.bDay + '", "user")', function (err) {
+                if (err) throw err;
+                else {
+                    res.redirect('/index.html')
+                }
+            })
+        }
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/adminPanelAddBook', function(req, res) {
+        var conn = mysqlDB();
+        console.log("role: "+ req.user.role);
+        console.log("username: ", req.user.user_name);
+        console.log("id " + req.body.bookID);
+        console.log("name " + req.body.bookName);
+        console.log("author " + req.body.bookAuthor);
+        console.log("year " + req.body.bookYear);
+        console.log("genre " + req.body.bookGenre);
+        console.log("publisher " + req.body.bookPublisher);
+        console.log("cover " + req.body.bookCover);
+        console.log("description " + req.body.bookDescription);
+       /* conn.query('INSERT INTO books(book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description) VALUES (' +
+            req.body.bookID + ', "' +
+            req.body.bookName + '", "' +
+            req.body.bookAuthor + '", ' +
+            req.body.bookYear + ', "' +
+            req.body.bookGenre + '", "' +
+            req.body.bookPublisher + '", "' +
+            req.body.bookCover + '", "' +
+            req.body.bookDescription + '")', function (err) {
+            if (err) throw err;
+            else {
+                res.redirect('/adminPanelBooks.html');
+            }
+        })*/
+    });
 };
 //
 //
