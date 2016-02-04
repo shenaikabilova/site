@@ -7,44 +7,37 @@
         <meta http-equiv="Content-Language" content="BG" />
         <link href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet"/>
         <link href = "stylesheets/adminPanel.css" type = "text/css" rel = "stylesheet"/>
-
-        <script type="text/javascript" src="/javascripts/load.js"></script>
     </head>
 
     <body>
-    <div class="nav">
-        <h3>Администратор</h3>
-    </div>
-
-    <div class="navigation">
-        <div class="menu">
-            <ul>
-                <li><a href="adminPanelAddBook.html">Добави нова книга</a></li>
-                <li><a href="adminPanelBooks.html">Книги</a></li>
-                <li><a class="selected" href="adminPanelUsers.html">Потребители</a></li>
-                <li><a href="adminPanelSettings.html">Настройки</a></li>
-                <li><a href="/logout">Изход</a></li>
-            </ul>
+        <div class="nav">
+            <h3>Администратор</h3>
         </div>
-    </div>
 
-    <div class="users">
-        <h3>Регистрирани потребители</h3>
+        <div class="navigation">
+            <div class="menu">
+                <ul>
+                    <li><a href="adminPanelAddBook.html">Добави нова книга</a></li>
+                    <li><a href="adminPanelBooks.html">Книги</a></li>
+                    <li><a class="selected" href="adminPanelUsers.html">Потребители</a></li>
+                    <li><a href="adminPanelSettings.html">Настройки</a></li>
+                    <li><a href="/logout">Изход</a></li>
+                </ul>
+            </div>
+        </div>
 
-        <table id="myTable">
-            <tr>
-                <th>Потребителско име</th>
-                <th>Парола1</th>
-                <th>Парола2</th>
-                <th>Е-майл</th>
-                <th>Пол</th>
-                <th>Рожден ден</th>
-            </tr>
+        <div class="users">
+            <h3>Регистрирани потребители</h3>
 
-            <script>
-                loadUsers();
-            </script>
-        </table>
-    </div>
+            <form action="adminPanelUsers" method="post">
+                <input type="submit" value="Потребители">
+            </form>
+
+            <form action="deleteUser" method="post">
+                <label for="delUser">Потребителско име:</label>
+                <input type="text" placeholder="Потребителско име" id="delUser" name="delUser" size="30">
+                <input type="submit" value="Изтрий">
+            </form>
+        </div>
     </body>
 </html>

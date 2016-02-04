@@ -21,12 +21,6 @@
                         $(this).val(datetext); }
                 });
             });
-
-            $(function() {
-                $('.nav h3').html('Welcome ' + localStorage.getItem('username'));
-
-                $('#adminName').val(localStorage.getItem('username'));
-            });
         </script>
     </head>
 
@@ -42,7 +36,6 @@
                 <li><a href="adminPanelBooks.html">Книги</a></li>
                 <li><a href="adminPanelUsers.html">Потребители</a></li>
                 <li><a class="selected" href="adminPanelSettings.html">Настройки</a></li>
-                <li><a class="adminPanelDelete.html">Изтрий</a></li>
                 <li><a href="/logout">Изход</a></li>
             </ul>
         </div>
@@ -51,7 +44,7 @@
     <div class="settings">
         <h4>Настройки на администратор</h4>
 
-        <form action="adminSettings" method="post">
+        <form action="adminPanelSettingsUpdate" method="post">
             <table>
                 <tr>
                     <td><lable for="adminName">Име: </lable></td>
@@ -71,7 +64,12 @@
                 </tr>
                 <tr>
                     <td><label for="datepicker">Рожден ден:</label></td>
-                    <td><input type="text" placeholder="Рожден ден" id="datepicker" name="bDay"></td>
+                    <td><input type="text" placeholder="Рожден ден" id="datepicker" name="adminBDay"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Промени">
+                    </td>
                 </tr>
             </table>
         </form>

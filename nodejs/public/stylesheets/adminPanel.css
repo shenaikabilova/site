@@ -65,8 +65,15 @@ body {
     border: 1px solid black;
 }
 
+
+
 .settings {
     margin-left: 280px;
     width: auto;
     height: 100%;
+}
+
+img {
+    width: 200px;
+    height: 300px;
 }

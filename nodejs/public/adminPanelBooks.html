@@ -18,7 +18,7 @@
             <div class="menu">
                 <ul>
                     <li><a href="adminPanelAddBook.html">Добави нова книга</a></li>
-                    <li><a class="selected" href="/adminPanelBooks">Книги</a></li>
+                    <li><a class="selected" href="adminPanelBooks.html">Книги</a></li>
                     <li><a href="adminPanelUsers.html">Потребители</a></li>
                     <li><a href="adminPanelSettings.html">Настройки</a></li>
                     <li><a href="/logout">Изход</a></li>
@@ -28,6 +28,32 @@
 
         <div class="books">
             <h3>Налични книги</h3>
+
+            <div>
+                <table>
+                    <tr>
+                        <form action="searchBook" method="post">
+                            <td><label for="nameOfBook">Име на книга:</label></td>
+                            <td><input type="text" placeholder="Име на книга" id="nameOfBook" name="enterNameOfBook" size="30"></td>
+                            <td><input type="submit" value="Намери"></td>
+                        </form>
+                    </tr>
+
+               <tr>
+                   <form action="deleteBook" method="post">
+                       <td><label for="id">№ на книга:</label></td>
+                       <td><input type="text" placeholder="№ на книга" id="id" name="id" size="30"></td>
+                       <td><input type="submit" value="Изтрий"></td>
+                    </form>
+               </tr>
+
+               <tr>
+                   <form action="adminPanelBooks" method="post">
+                       <td><input type="submit" value="Изведи всички"></td>
+                    </form>
+               </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>

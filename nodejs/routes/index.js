@@ -40,7 +40,6 @@ module.exports = function(app, passport) {
             if(req.user.role==='admin') {
                 res.redirect('/adminPanelAddBook.html');
             }
-            //else res.redirect('/user.html');
             if(req.user.role === 'user') {
                 res.redirect('/user.html');
             }
@@ -76,31 +75,118 @@ module.exports = function(app, passport) {
             req.body.bookGenre + '", "' +
             req.body.bookPublisher + '", "' +
             req.body.bookCover + '", "' +
-            req.body.bookDescription + '")', function (err) {
-            if (err) throw err;
-            else {
-                res.redirect('/adminPanelAddBook.html');
-            }
+            req.body.bookDescription + '")',
+            function (err) {
+                if (err) throw err;
+                else {
+                    res.redirect('/adminPanelAddBook.html');
+                }
         })
     });
 
-    app.post('/adminPanelBooks', function(req, res) {
+    //noinspection JSUnresolvedFunction
+ /*   app.post('/adminPanelBooks', function(req, res) {
+        console.log("example");
         var conn = mysqlDB();
-        conn.query('SELECT book_id, book_name, book_author, book_year, book_genre, ' +
-            'book_publisher, book_cover, book_description FROM books)', function(err, rows) {
+
+        conn.query('SELECT book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description FROM books)',
+            function(err, rows) {
                 if(err) throw err;
 
                 for (var i = 0; i < rows.length; i++) {
-                    console.log(rows[i].book_id);
+                    console.log(rows[i]);
                 };
         });
+    });*/
+
+    //noinspection JSUnresolvedFunction
+    app.post('/adminPanelBooks',  function(req, res) {
+        var conn = mysqlDB();
+
+        conn.query('SELECT book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description FROM books',
+            function(err, rows) {
+                if(err) throw err;
+
+                /*for (var i = 0; i < rows.length; i++) {
+                    console.log(rows[i]);
+                };*/
+
+
+                res.render('books', {title: 'Книги', rows: rows});
+            });
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/searchBook',  function(req, res) {
+        var conn = mysqlDB();
+
+        conn.query('SELECT book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description FROM books WHERE book_name = ?', req.body.enterNameOfBook,
+            function(err, rows) {
+                if(err) throw err;
+
+               /* for (var i = 0; i < rows.length; i++) {
+                    console.log(rows[i]);
+                };*/
+
+                res.render('books', {title: 'Книги', rows: rows});
+            });
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/deleteBook', function(req, res) {
+        var conn = mysqlDB();
+
+        conn.query('DELETE FROM books WHERE book_id = ?', req.body.id, function(err, rows) {
+            if(err) throw err;
+
+            res.sendFile('/adminPanelBooks');
+        });
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/adminPanelUsers', function(req, res){
+        var conn = mysqlDB();
+
+        conn.query('SELECT user_name,pass,email,gender,b_day, role FROM users', function(err, rows) {
+            if(err) throw err;
+
+            res.render('users', {title: 'Потребители', rows: rows});
+        });
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.get('/adminPanelSettings', function(req, res) {
+        var conn = mysqlDB();
+
+        conn.query('SELECT * FROM users WHERE user_name = ?', req.user.user_name, function (err, rows) {
+            if(err) throw err;
+
+            res.body.adminName = rows[0].user_name;
+            res.body.adminPass = rows[0].pass;
+            res.body.adminEmail = rows[0].email;
+            res.body.adminGender = rows[0].gender;
+            res.body.adminBDay = rows[0].b_day;
+        });
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/adminPanelSettingsUpdate', function(req, res) {
+        var conn = mysqlDB();
+
+        conn.query('UPDATE users SET user_name= ?, pass = ?, email = ?, gender = ?,b_day = ?',
+                    [req.body.adminName, req.body.adminPass, req.body.adminEmail, req.body.adminGender, req.body.bDay],
+                    function(err, rows) {
+                        if(err) throw err;
+
+                        res.sendfile('/adminPanelSettings');
+                    });
     });
 
     app.get('/logout', function(req, res) {
         console.log("end session " + req.user.user_name);
         req.logout();
         res.redirect('index.html');
-    })
+    });
 };
 //
 //

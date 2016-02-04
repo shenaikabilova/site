@@ -1,0 +1,60 @@
+//
+   Created by User on 4.2.2016 г..
+block head
+
+    head
+        meta(charset="UTF-8")
+        title Книги
+        meta(http-equiv="Content-Type" content="text/html" charset="utf-8")
+        meta(http-equiv="Content-Language" content="BG")
+        link(href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet")
+        link(href = "stylesheets/adminPanel.css" type = "text/css" rel = "stylesheet")
+
+block content
+    body
+        .nav
+            h3 Администратор
+
+        .navigation
+            .menu
+                ul
+                    li
+                        a(href="adminPanelAddBook.html") Добави нова книга
+                    li
+                        a(href="adminPanelBooks.html") Книги
+                    li
+                        a(class="selected" href="adminPanelUsers.html") Потребители
+                    li
+                        a(href="adminPanelSettings.html") Настройки
+                    li
+                        a(href="/logout") Изход
+
+        .users
+            h3 Регистрирани потребители
+
+            form(action="adminPanelUsers" method="post")
+                input(type="submit" value="Потребители")
+
+            form(action="deleteUser" method="post")
+                label(for="delUser") Потребителско име:
+                input(type="text" placeholder="Потребителско име" id="delUser" name="delUser" size="30")
+                input(type="submit" value="Изтрий")
+
+            table
+                thead
+                    tr
+                        th Потребителско име
+                        th Парола
+                        th Е-майл
+                        th Пол
+                        th Рожден ден
+                        th Роля
+                tbody
+                    - each item in rows
+                        tr
+                            td= item.user_name
+                            td= item.pass
+                            td= item.email
+                            td= item.gender
+                            td= item.b_day
+                            td= item.role
