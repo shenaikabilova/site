@@ -32,9 +32,9 @@
         <div  class="navigation">
             <div class="menu">
                 <ul>
-                    <li><a href="user.html">Начало</a></li>
+                    <li><a href="/userLog">Начало</a></li>
                     <li><a href="#">Моята библиотека</a></li>
-                    <li><a class="selected" href="userSettings.html">Настройки</a></li>
+                    <li><a class="selected" href="/userSettings">Настройки</a></li>
                     <li><a href="/logout">Изход</a></li>
                 </ul>
             </div>
@@ -42,7 +42,7 @@
 
         <div class="settings">
             <h3>Потребителски настройки</h3>
-            <form action="userSettings" method="post">
+            <form action="userSettingsUpdate" method="post">
                 <table>
                     <tr>
                         <td><label for="username">Потребителско име</label></td>
@@ -58,8 +58,8 @@
                     </tr>
                     <tr>
                         <td><label for="gender">Пол:</label></td>
-                        <td><input type="radio" id="gender" name="gender" value="male" checked>мъж</td>
-                        <td><input type="radio" name="gender" value="female">жена</td>
+                        <td><input type="radio" id="gender" name="gender" value="m" checked>мъж</td>
+                        <td><input type="radio" name="gender" value="f">жена</td>
                     </tr>
                     <tr>
                         <td><label for="birthday">Рожден ден:</label></td>

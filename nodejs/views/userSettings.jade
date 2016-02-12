@@ -1,0 +1,96 @@
+//
+   Created by User on 5.2.2016 г..
+block head
+    head
+        meta(charset="UTF-8")
+        title= title
+        meta(http-equiv="Content-Type" content="text/html" charset="utf-8")
+        meta(http-equiv="Content-Language" content="BG")
+        link(href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet")
+        link(href = "stylesheets/users.css" type = "text/css" rel = "stylesheet")
+
+        link(rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css")
+        script(src="//code.jquery.com/jquery-1.10.2.js")
+        script(src="//code.jquery.com/ui/1.11.4/jquery-ui.js")
+        link(rel="stylesheet" href="/resources/demos/style.css")
+
+        script.
+            $(function() {
+                $( "#datepicker" ).datepicker({
+                    dateFormat: "yy-mm-dd",
+                    onSelect: function(datetext){
+                    $(this).val(datetext); }
+                });
+            });
+
+block content
+    body
+        .nav
+            h3 Моята библиотека
+
+        .navigation
+            .menu
+                ul
+                    li
+                        a(href="/user") Начало
+                    li
+                        a(href="/userBooks") Моята библиотека
+                    li
+                        a(class="selected" href="/userSettings") Настройки
+                    li
+                        a(href="/logout") Изход
+
+        .settings
+            h3 Потребителски настройки
+
+            form(action="userSettingsUpdate" method="post")
+                - each item in rows
+                    table
+                        tr
+                            td
+                                label(for="username") Потребителско име
+                            td
+                                input(type="text" id="username" name="username" value= item.user_name)
+                        tr
+                            td
+                                label(for="password") Парола
+                            td
+                                input(type="text" id="password" name="password" value= item.pass)
+                        tr
+                            td
+                                label(for="newPass2") Повторене паролата
+                            td
+                                input(type="password" id="newPass2" name="pass2")
+                        tr
+                            td
+                                label(for="email") Е-майл
+                            td
+                                input(type="text" id="email" name="email" value= item.email)
+                        tr
+                            td
+                                label(id="gender") Пол:
+                            - if(item.gender=='m')
+                                td
+                                    input(type="radio" name="gender" value="m" checked)
+                                    Мъж
+                                td
+                                    input(type="radio" name="gender" value="f")
+                                    Жена
+                            - if(item.gender=='f')
+                                td
+                                    input(type="radio" name="gender" value="m")
+                                    Мъж
+                                td
+                                    input(type="radio" name="gender" value="f" checked)
+                                    Жена
+                        tr
+                            td
+                                label(for="birthday") Рожден ден:
+                            td
+                                input(type="text" id="datepicker" name="bDay" value= item.b_day)
+                        tr
+                            td
+                                input(type="submit" value="Промени")
+
+            form(action="userSettingsDelete" method="post")
+                input(type="submit" value="Изтрий акаунт")

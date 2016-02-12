@@ -1,0 +1,88 @@
+//
+   Created by User on 7.2.2016 г..
+block head
+    head
+        meta(charset="UTF-8")
+        title Настройки
+        meta(http-equiv="Content-Type" content="text/html" charset="utf-8")
+        meta(http-equiv="Content-Language" content="BG")
+        link(href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet")
+        link(href = "stylesheets/adminPanel.css" type = "text/css" rel = "stylesheet")
+
+        link(rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css")
+        script(src="//code.jquery.com/jquery-1.10.2.js")
+        script(src="//code.jquery.com/ui/1.11.4/jquery-ui.js")
+        link(rel="stylesheet" href="/resources/demos/style.css")
+        script.
+            $(function() {
+                $( "#datepicker" ).datepicker({
+                        dateFormat: "yy-mm-dd", onSelect: function(datetext){
+                            $(this).val(datetext); }
+                });
+            });
+
+block content
+    body
+        .nav
+            h3 Администратор
+
+        .navigation
+            .menu
+                ul
+                    li
+                        a(href="adminPanelAddBook.html") Добави нова книга
+                    li
+                        a(href="adminPanelBooks.html") Книги
+                    li
+                        a(href="adminPanelUsers.html") Потребители
+                    li
+                        a(class="selected" href="/adminPanelSettings") Настройки
+                    li
+                        a(href="/logout") Изход
+
+        .settings
+            h4 Настройки на администратор
+
+            form(action="adminPanelSettingsUpdate" method="post")
+                - each item in rows
+                    table
+                        tr
+                            td
+                                lable(for="adminName") Име:
+                            td
+                                input(type="text" id="adminName" name="adminName" value= item.user_name)
+                        tr
+                            td
+                                label(for="adminPass") Парола:
+                            td
+                                input(type="text" id="adminPass" name="adminPass" value= item.pass)
+                        tr
+                            td
+                                label(for="adminEmail") Е-майл:
+                            td
+                                input(type="text" id="adminEmail" name="adminEmail" value= item.email)
+                        tr
+                            td
+                                label(id="adminGender") Пол:
+                            - if(item.gender=='m')
+                                td
+                                    input(type="radio" name="adminGender" value="m" checked)
+                                    Мъж
+                                td
+                                    input(type="radio" name="adminGender" value="f")
+                                    Жена
+                            - if(item.gender=='f')
+                                td
+                                    input(type="radio" name="adminGender" value="m")
+                                    Мъж
+                                td
+                                    input(type="radio" name="adminGender" value="f" checked)
+                                    Жена
+                        tr
+                            td
+                                label(for="datepicker") Рожден ден:
+                            td
+                                input(type="text" placeholder="Рожден ден" id="datepicker" name="adminBDay" value= item.b_day)
+                        tr
+                            td
+                                input(type="submit" value="Промени")

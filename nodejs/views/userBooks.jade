@@ -1,0 +1,55 @@
+//
+   Created by User on 10.2.2016 г..
+block head
+    head
+        meta(charset="UTF-8")
+        title= title
+        meta(http-equiv="Content-Type" content="text/html" charset="utf-8")
+        meta(http-equiv="Content-Language" content="BG")
+        link(href = "http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css" rel = "stylesheet")
+        link(href = "stylesheets/users.css" type = "text/css" rel = "stylesheet")
+        link(href = "stylesheets/adminPanel.css" type = "text/css" rel = "stylesheet")
+
+block content
+    body
+        .nav
+            h3 Моята библиотека
+
+        .navigation
+            .menu
+                ul
+                    li
+                        a(href="/user") Начало
+                    li
+                        a(class="selected" href="/userBooks") Моята библиотека
+                    li
+                        a(href="/userSettings") Настройки
+                    li
+                        a(href="/logout") Изход
+
+        .settings
+            h3 Моите книги
+
+            table
+                thead
+                    tr
+                        th №
+                        th Книга
+                        th Автор
+                        th Година
+                        th Жанр
+                        th Издателство
+                        th Корица
+                        th Описания
+                tbody
+                    - each item in rows
+                        tr
+                            td= item.book_id
+                            td= item.book_name
+                            td= item.book_author
+                            td= item.book_year
+                            td= item.book_genre
+                            td= item.book_publisher
+                            td
+                                img(src="../images/" + item.book_cover)
+                            td= item.book_description

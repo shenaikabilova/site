@@ -8,7 +8,8 @@ function mysqlDB() {
     host: 'localhost',
     user: 'root',
     password: '123456',
-    database: 'users'
+    database: 'users',
+    dateStrings: 'date'
   });
   connection.connect();
 
@@ -41,7 +42,16 @@ module.exports = function(app, passport) {
                 res.redirect('/adminPanelAddBook.html');
             }
             if(req.user.role === 'user') {
-                res.redirect('/user.html');
+                //res.redirect('/userLog.html');
+
+                var conn = mysqlDB();
+
+                conn.query('SELECT book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description FROM books',
+                    function(err, rows) {
+                        if (err) throw err;
+
+                        res.render('user', {title: req.user.user_name, rows: rows});
+                    });
             }
     });
 
@@ -67,8 +77,8 @@ module.exports = function(app, passport) {
     app.post('/adminPanelAddBook', function(req, res) {
         var conn = mysqlDB();
 
-        conn.query('INSERT INTO books(book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description) VALUES (' +
-            req.body.bookID + ', "' +
+        conn.query('INSERT INTO books(book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description) VALUES ("' +
+            req.body.bookID + '", "' +
             req.body.bookName + '", "' +
             req.body.bookAuthor + '", ' +
             req.body.bookYear + ', "' +
@@ -83,21 +93,6 @@ module.exports = function(app, passport) {
                 }
         })
     });
-
-    //noinspection JSUnresolvedFunction
- /*   app.post('/adminPanelBooks', function(req, res) {
-        console.log("example");
-        var conn = mysqlDB();
-
-        conn.query('SELECT book_id,book_name,book_author,book_year,book_genre,book_publisher,book_cover,book_description FROM books)',
-            function(err, rows) {
-                if(err) throw err;
-
-                for (var i = 0; i < rows.length; i++) {
-                    console.log(rows[i]);
-                };
-        });
-    });*/
 
     //noinspection JSUnresolvedFunction
     app.post('/adminPanelBooks',  function(req, res) {
@@ -161,11 +156,8 @@ module.exports = function(app, passport) {
         conn.query('SELECT * FROM users WHERE user_name = ?', req.user.user_name, function (err, rows) {
             if(err) throw err;
 
-            res.body.adminName = rows[0].user_name;
-            res.body.adminPass = rows[0].pass;
-            res.body.adminEmail = rows[0].email;
-            res.body.adminGender = rows[0].gender;
-            res.body.adminBDay = rows[0].b_day;
+            console.log(rows);
+            res.render('adminPanelSettings', {rows:rows});
         });
     });
 
@@ -180,6 +172,92 @@ module.exports = function(app, passport) {
 
                         res.sendfile('/adminPanelSettings');
                     });
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/deleteUser', function(req, res) {
+        var conn = mysqlDB();
+
+        conn.query('DELETE a.*, b.* FROM users a left join userbooks b on a.user_name = b.user_name where a.user_name=?', [req.body.delUser], function(err, rows){
+            if(err) throw err;
+
+            res.redirect('/adminPanelUsers.html');
+        });
+    });
+
+    app.get('/userSettings', function(req, res) {
+        console.log("proba");
+
+        var conn = mysqlDB();
+
+        conn.query('SELECT * FROM users WHERE user_name = ?', req.user.user_name, function(err, rows) {
+            if(err) throw err;
+
+            console.log(rows);
+            res.render('userSettings', {title: req.user.user_name, rows: rows});
+        });
+    });
+
+    app.get('/user', function(req, res) {
+        var conn = mysqlDB();
+
+        conn.query('SELECT * FROM books', function (err, rows) {
+            if(err) throw err;
+
+            res.render('user', {rows: rows});
+        });
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/userSettingsUpdate', function(req, res) {
+       var conn = mysqlDB();
+
+        if(req.body.password === req.body.pass2) {
+            conn.query('UPDATE users SET user_name= ?, pass = ?, email = ?, gender = ?,b_day = ? where user_name=?',
+                [req.body.username, req.body.password, req.body.email, req.body.gender, req.body.bDay, req.user.user_name],
+                function (err, rows) {
+                    if (err) throw err;
+
+                    res.render('userSettings', {rows: rows});
+                });
+        }
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/userSettingsDelete', function(req, res) {
+        var conn = mysqlDB();
+
+        conn.query('DELETE a.*, b.* FROM users a left join userbooks b on a.user_name = b.user_name where a.user_name=?', [req.user.user_name], function(err, rows){
+            if(err) throw err;
+
+            console.log("end session " + req.user.user_name);
+            req.logout();
+            res.redirect('index.html');
+        });
+    });
+
+    //noinspection JSUnresolvedFunction
+    app.post('/addUserBook', function(req,res) {
+        var conn = mysqlDB();
+
+        conn.query("INSERT INTO userbooks(user_name,book_id) VALUES(?,?)", [req.user.user_name, req.body.bookISIN], function(err, rows) {
+            if(err) throw err;
+
+            console.log(rows);
+            res.render('userBooks', {rows:rows});
+        });
+    });
+
+    app.get('/userBooks', function(req, res) {
+        var conn = mysqlDB();
+
+        conn.query('SELECT books.book_id, books.book_name,books.book_author, books.book_year,books.book_genre,books.book_publisher,books.book_cover,books.book_description FROM userbooks inner join books on userbooks.book_id=books.book_id where user_name=?', [req.user.user_name],
+            function(err, rows){
+                if(err) throw err;
+
+                console.log(rows);
+                res.render('userBooks', {rows:rows});
+        });
     });
 
     app.get('/logout', function(req, res) {
@@ -213,7 +291,7 @@ module.exports = function(app, passport) {
             if(role === 'admin') {
                 res.redirect('/adminPanelAddBook.html');
             }
-            else res.redirect('/user.html');
+            else res.redirect('/userLog.html');
         }
 
     });
@@ -232,7 +310,7 @@ module.exports = function(app, passport) {
             req.body.bDay + '", "user")', function (err) {
             if (err) throw err;
             else {
-                res.redirect('/user.html')
+                res.redirect('/userLog.html')
             }
         })
     }
